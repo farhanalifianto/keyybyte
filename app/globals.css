@@ -4,10 +4,10 @@
 
 @layer utilities {
   .center {
-    @apply flex h-screen justify-center items-center bg-amber-100;
+    @apply flex h-screen justify-center items-center bg-slate-400;
   }
   .h1 {
-    @apply text-[34px] leading-[42px] font-bold text-white;
+    @apply text-[34px] leading-[42px] font-bold;
   }
   .main-text {
     @apply font-bold text-center;
@@ -23,5 +23,25 @@
 @layer base {
   :root {
     --radius: 0.5rem;
+  }
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* background: #1e2238; */
+    background: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
