@@ -2,7 +2,7 @@
 import FormInput from "./ui/forminput";
 import Button from "./ui/button";
 import { useState, useRef, FormEvent } from "react";
-import { createAccount } from "@/lib/actions/user.action";
+import { createAccount, signInUser } from "@/lib/actions/user.action";
 import OTPModal from "./OTPModal";
 type SignType = {
   type: string;
@@ -20,10 +20,14 @@ const AuthForm = (props: SignType) => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const user = await createAccount({
-        fullName: form.fullname.value || "",
-        email: form.email.value,
-      });
+      const user =
+        type === "sign-up"
+          ? await createAccount({
+              fullName: form.fullname.value || "",
+              email: form.email.value,
+            })
+          : await signInUser({ email: form.email.value });
+
       setAccountId(user.accountId);
       setEmailOtp(form.email.value);
     } catch {
@@ -35,15 +39,21 @@ const AuthForm = (props: SignType) => {
   return (
     <>
       <form onSubmit={handleLogin} className="auth-form">
-        <p className="text-red-500"></p>
+        <p className="text-3xl font-bold">
+          {type === "sign-in" ? "Sign In" : "Sign Up"}
+        </p>
+        {type === "sign-up" ? (
+          <FormInput
+            text="Full Name"
+            name="fullname"
+            type="text"
+            placeholder="John Doe"
+            ref={usernameRef}
+          />
+        ) : (
+          <></>
+        )}
 
-        <FormInput
-          text="Full Name"
-          name="fullname"
-          type="text"
-          placeholder="John Doe"
-          ref={usernameRef}
-        />
         <FormInput
           text="Email"
           name="email"
@@ -56,8 +66,27 @@ const AuthForm = (props: SignType) => {
           }}
           type="submit"
         >
-          {type === "signin" ? "Sign In" : "Sign Up"}
+          {type === "sign-in" ? "Sign In" : "Sign Up"}
         </Button>
+        {type === "sign-up" ? (
+          <div className="text-center">
+            <p>
+              Already have an account?{" "}
+              <a href="/sign-in" className="font-bold">
+                Sign In
+              </a>
+            </p>
+          </div>
+        ) : (
+          <div className="text-center">
+            <p>
+              Don't have an account?{" "}
+              <a href="/sign-up" className="font-bold">
+                Sign Up
+              </a>
+            </p>
+          </div>
+        )}
         {loginFailed && (
           <p className="text-red-500 text-center">{loginFailed}</p>
         )}

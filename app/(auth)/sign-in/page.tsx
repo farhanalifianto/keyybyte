@@ -1,5 +1,9 @@
 import AuthForm from "@/components/AuthForm";
-
-const SignIN = () => <AuthForm type="sign-in" />;
+import Layout from "../auth-layout";
+const SignIN = () => (
+  <Layout>
+    <AuthForm type="sign-in" />
+  </Layout>
+);
 
 export default SignIN;

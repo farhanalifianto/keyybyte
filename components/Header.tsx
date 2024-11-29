@@ -3,6 +3,7 @@ import Search from "./Search";
 import FileUploader from "./FileUploader";
 import Head from "next/head";
 import { CiLogout } from "react-icons/ci";
+import { signOut } from "@/lib/actions/user.action";
 const Header = () => {
   return (
     <>
@@ -16,7 +17,13 @@ const Header = () => {
         <Search />
         <div className="flex flex-center min-w-fit gap-4">
           <FileUploader /> <i className="bx bxs-log-out" />
-          <form>
+          <form
+            action={async () => {
+              "use server";
+
+              await signOut();
+            }}
+          >
             <button
               type="submit"
               className="flex items-center gap-2 text-black bg-white rounded-lg px-3 py-1 font-semibold"
