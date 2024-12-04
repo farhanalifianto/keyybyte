@@ -4,7 +4,13 @@ import FileUploader from "./FileUploader";
 import Head from "next/head";
 import { CiLogout } from "react-icons/ci";
 import { signOut } from "@/lib/actions/user.action";
-const Header = () => {
+const Header = ({
+  userId,
+  accountId,
+}: {
+  userId: string;
+  accountId: string;
+}) => {
   return (
     <>
       <Head>
@@ -16,7 +22,8 @@ const Header = () => {
       <header className="hidden items-center justify-between gap-5 p-5 sm:flex lg:py-7 xl:gap-10">
         <Search />
         <div className="flex flex-center min-w-fit gap-4">
-          <FileUploader /> <i className="bx bxs-log-out" />
+          <FileUploader ownerId={userId} accountId={accountId} />{" "}
+          <i className="bx bxs-log-out" />
           <form
             action={async () => {
               "use server";
