@@ -21,9 +21,8 @@ const Header = ({
       </Head>
       <header className="hidden items-center justify-between gap-5 p-5 sm:flex lg:py-7 xl:gap-10">
         <Search />
-        <div className="flex flex-center min-w-fit gap-4">
+        <div className="flex flex-center items-center min-w-fit gap-4">
           <FileUploader ownerId={userId} accountId={accountId} />{" "}
-          <i className="bx bxs-log-out" />
           <form
             action={async () => {
               "use server";
@@ -33,9 +32,9 @@ const Header = ({
           >
             <button
               type="submit"
-              className="flex items-center gap-2 text-black bg-white rounded-lg px-3 py-1 font-semibold"
+              className="flex items-center justify-center gap-2 text-black bg-white rounded-lg px-3 py-1 font-semibold"
             >
-              <h1 className="text-xl">
+              <h1 className="text-3xl">
                 <CiLogout />
               </h1>
             </button>

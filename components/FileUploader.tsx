@@ -3,23 +3,58 @@
 import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useDropzone } from "react-dropzone";
-import { RiFolderUploadFill } from "react-icons/ri";
+import { CiInboxOut } from "react-icons/ci";
 import { getFileType } from "@/lib/utils";
 import Thumbnail from "./Thumbnail";
 import { convertFileToUrl } from "@/lib/utils";
 import Image from "next/image";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import { MAX_FILE_SIZE } from "@/constant";
+import { useToast } from "@/hooks/use-toast";
+import { uploadFile } from "@/lib/actions/file.action";
+import { usePathname } from "next/navigation";
 interface Props {
   ownerId: string;
   accountId: string;
   className?: string;
 }
 const FileUploader = ({ ownerId, accountId, className }: Props) => {
+  const path = usePathname();
+  const { toast } = useToast();
   const [files, setFiles] = useState<File[]>([]);
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      setFiles(acceptedFiles);
+      const uploadPromises = acceptedFiles.map(async (file) => {
+        if (file.size > MAX_FILE_SIZE) {
+          setFiles((prevFiles) =>
+            prevFiles.filter((file) => file.name !== file.name)
+          );
+          return toast({
+            description: (
+              <p className="text-sm text-white ">
+                <span className="font-semibold">{file.name}</span> is too large.
+                Max file is 50MB
+              </p>
+            ),
+            className: "bg-red rounded-lg",
+          });
+        }
+        return uploadFile({ file, ownerId, accountId, path }).then(
+          (uploadFile) => {
+            if (uploadFile) {
+              setFiles((prevFiles) =>
+                prevFiles.filter((file) => file.name !== file.name)
+              );
+            }
+          }
+        );
+      });
+      await Promise.all(uploadPromises);
+    },
+    [ownerId, accountId, path]
+  );
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
 
@@ -40,12 +75,11 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
       <button
         type="button"
         className={cn(
-          "bg-black text-white p-2 rounded-lg flex justify-center items-center",
+          "bg-white text-black p-2 rounded-lg flex justify-center items-center",
           className
         )}
       >
-        <RiFolderUploadFill size={45} />
-        <p>Upload</p>
+        <CiInboxOut size={35} />
       </button>
       {files.length > 0 && (
         <ul className="fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-white p-7 shadow-drop-3 ">
@@ -85,11 +119,6 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
             );
           })}
         </ul>
-      )}
-      {isDragActive ? (
-        <p className="text-black">Drop the files here ...</p>
-      ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
       )}
     </div>
   );
