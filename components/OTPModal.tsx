@@ -24,7 +24,7 @@ const OTPModal = (props: Proptypes) => {
     try {
       const password = form.password.value;
       const sessionId = await verifySecret({ accountId, password });
-      if (sessionId) router.push("/");
+      if (sessionId) router.push("/dashboard");
       console.log();
     } catch (error) {
       console.log("failed to verfy OTP", error);

@@ -41,25 +41,25 @@ const Sidebar = (props: propstypes) => {
               <p className="hidden lg:block">Dashboard</p>
             </li>
           </Link>
-          <Link href="/dashboard" className="lg:full">
+          <Link href="/documents" className="lg:full">
             <li className="flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center h5 lg:px-[30px] h-[52px] lg:rounded-full ">
               <IoDocument className="w-6" />
               <p className="hidden lg:block">Documents</p>
             </li>
           </Link>
-          <Link href="/dashboard" className="lg:full">
+          <Link href="/images" className="lg:full">
             <li className="flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center h5 lg:px-[30px] h-[52px] lg:rounded-full ">
               <FaRegImages className="w-6" />
               <p className="hidden lg:block">Images</p>
             </li>
           </Link>
-          <Link href="/dashboard" className="lg:full">
+          <Link href="/media" className="lg:full">
             <li className="flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center h5 lg:px-[30px] h-[52px] lg:rounded-full ">
               <TiMediaPlay className="w-6" />
               <p className="hidden lg:block">Media</p>
             </li>
           </Link>
-          <Link href="/dashboard" className="lg:full">
+          <Link href="/others" className="lg:full">
             <li className="flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center h5 lg:px-[30px] h-[52px] lg:rounded-full ">
               <PiChartPieDuotone className="w-6" />
               <p className="hidden lg:block">Others</p>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Layout from "./root-layout";
+import Layout from "./layout";
 import Head from "next/head";
 import { AiFillCaretUp } from "react-icons/ai";
 export default function Home() {
