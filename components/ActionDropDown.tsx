@@ -28,6 +28,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { rename } from "fs";
 import { renameFile } from "@/lib/actions/file.action";
 import { usePathname } from "next/navigation";
+import { FileDetails } from "./ActionModalContent";
 const ActionDropDown = ({ file }: { file: Models.Document }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,6 +75,7 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
               onChange={(e) => setName(e.target.value)}
             />
           )}
+          {value === "details" && <FileDetails file={file} />}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-1 md:flex-row">
