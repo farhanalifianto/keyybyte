@@ -25,20 +25,37 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { actionsDropdownItems } from "@/constant";
 import { constructDownloadUrl } from "@/lib/utils";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { rename } from "fs";
+import { renameFile } from "@/lib/actions/file.action";
+import { usePathname } from "next/navigation";
 const ActionDropDown = ({ file }: { file: Models.Document }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
-
+  const path = usePathname();
   const closeAllModal = () => {
     setIsModalOpen(false);
     setIsDropdownOpen(false);
     setAction(null);
     setName(file.name);
   };
-  const handleActions = async () => {};
+  const handleActions = async () => {
+    if (!action) return;
+    setIsLoading(true);
+    let success = false;
+
+    const actions = {
+      rename: () =>
+        renameFile({ fileId: file.$id, name, extension: file.extension, path }),
+      share: () => console.log("share"),
+      delete: () => console.log("delete"),
+    };
+    success = await actions[action.value as keyof typeof actions]();
+    if (success) closeAllModal();
+    setIsLoading(false);
+  };
 
   const renderDialogContent = () => {
     if (!action) return null;
