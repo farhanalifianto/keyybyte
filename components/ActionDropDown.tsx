@@ -2,7 +2,17 @@
 
 import React from "react";
 import { useState } from "react";
-import { Dialog } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Models } from "node-appwrite";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +22,64 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SlOptionsVertical } from "react-icons/sl";
-
-const ActionDropDown = () => {
+import { actionsDropdownItems } from "@/constant";
+import { constructDownloadUrl } from "@/lib/utils";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+const ActionDropDown = ({ file }: { file: Models.Document }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [action, setAction] = useState<ActionType | null>(null);
+  const [name, setName] = useState(file.name);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const closeAllModal = () => {
+    setIsModalOpen(false);
+    setIsDropdownOpen(false);
+    setAction(null);
+    setName(file.name);
+  };
+  const handleActions = async () => {};
+
+  const renderDialogContent = () => {
+    if (!action) return null;
+    const { value, label } = action;
+
+    return (
+      <DialogContent className="focus:ring-0 focus:ring-offset-0 focus-visible:border-none outline-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0">
+        <DialogHeader className="flex flex-col gap-3">
+          <DialogTitle className=" capitalize text-center">
+            {action.value}
+          </DialogTitle>
+          {value === "rename" && (
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          )}
+        </DialogHeader>
+        {["rename", "delete", "share"].includes(value) && (
+          <DialogFooter className="flex flex-col gap-1 md:flex-row">
+            <button
+              className="bg-black text-white p-2 rounded-md "
+              onClick={closeAllModal}
+            >
+              Cancel
+            </button>
+            <button
+              className="capitalize bg-black text-white p-2 rounded-md"
+              onClick={handleActions}
+            >
+              <p>{value}</p>
+              {isLoading && (
+                <AiOutlineLoading3Quarters className="animate-spin" />
+              )}
+            </button>
+          </DialogFooter>
+        )}
+      </DialogContent>
+    );
+  };
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
@@ -23,14 +87,40 @@ const ActionDropDown = () => {
           <SlOptionsVertical className="text-xl" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel className="max-w-[200px] truncate">
+            {file.name}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          {actionsDropdownItems.map((actionItem) => (
+            <DropdownMenuItem
+              key={actionItem.value}
+              onClick={() => {
+                setAction(actionItem);
+                if (
+                  ["rename", "share", "delete", "details"].includes(
+                    actionItem.value
+                  )
+                ) {
+                  setIsModalOpen(true);
+                }
+              }}
+            >
+              {actionItem.value === "download" ? (
+                <Link
+                  href={constructDownloadUrl(file.bucketFileId)}
+                  download={file.name}
+                  className="flex items-center gap-2"
+                >
+                  {actionItem.label}
+                </Link>
+              ) : (
+                <>{actionItem.label}</>
+              )}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
+      {renderDialogContent()}
     </Dialog>
   );
 };

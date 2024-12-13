@@ -25,7 +25,7 @@ const Card = (props: CardProps) => {
           imageClassName="w-20 h-20"
         />
         <div className="flex flex-col items-end justify-between">
-          <ActionDropDown />
+          <ActionDropDown file={file} />
           <p className="text-sm">{convertFileSize(file.size)}</p>
         </div>
       </div>
