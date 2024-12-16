@@ -26,15 +26,17 @@ import { actionsDropdownItems } from "@/constant";
 import { constructDownloadUrl } from "@/lib/utils";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { rename } from "fs";
-import { renameFile } from "@/lib/actions/file.action";
+import { renameFile, updateFileUsers } from "@/lib/actions/file.action";
 import { usePathname } from "next/navigation";
-import { FileDetails } from "./ActionModalContent";
+import { FileDetails, ShareInput } from "./ActionModalContent";
+
 const ActionDropDown = ({ file }: { file: Models.Document }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState<string[]>([]);
   const path = usePathname();
   const closeAllModal = () => {
     setIsModalOpen(false);
@@ -50,13 +52,15 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
     const actions = {
       rename: () =>
         renameFile({ fileId: file.$id, name, extension: file.extension, path }),
-      share: () => console.log("share"),
+      share: () => updateFileUsers({ fileId: file.$id, emails, path }),
       delete: () => console.log("delete"),
     };
     success = await actions[action.value as keyof typeof actions]();
     if (success) closeAllModal();
     setIsLoading(false);
   };
+
+  const handleRemoveUser = () => {};
 
   const renderDialogContent = () => {
     if (!action) return null;
@@ -73,6 +77,13 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+            />
+          )}
+          {value === "share" && (
+            <ShareInput
+              file={file}
+              onInputChange={setEmails}
+              onRemove={handleRemoveUser}
             />
           )}
           {value === "details" && <FileDetails file={file} />}
