@@ -26,7 +26,11 @@ import { actionsDropdownItems } from "@/constant";
 import { constructDownloadUrl } from "@/lib/utils";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { rename } from "fs";
-import { renameFile, updateFileUsers } from "@/lib/actions/file.action";
+import {
+  renameFile,
+  updateFileUsers,
+  deleteFile,
+} from "@/lib/actions/file.action";
 import { usePathname } from "next/navigation";
 import { FileDetails, ShareInput } from "./ActionModalContent";
 
@@ -53,7 +57,8 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
       rename: () =>
         renameFile({ fileId: file.$id, name, extension: file.extension, path }),
       share: () => updateFileUsers({ fileId: file.$id, emails, path }),
-      delete: () => console.log("delete"),
+      delete: () =>
+        deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path }),
     };
     success = await actions[action.value as keyof typeof actions]();
     if (success) closeAllModal();
@@ -85,6 +90,12 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
               onInputChange={setEmails}
               onRemove={handleRemoveUser}
             />
+          )}
+          {value === "delete" && (
+            <p className="text-center font-medium">
+              Are you sure you want to delete{" "}
+              <span className="text-center font-bold">{file.name}</span>?
+            </p>
           )}
           {value === "details" && <FileDetails file={file} />}
         </DialogHeader>
