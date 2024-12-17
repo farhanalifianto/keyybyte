@@ -6,10 +6,10 @@ import { Input } from "./ui/inputx";
 import { CiCircleRemove } from "react-icons/ci";
 import { convertFileSize, formatDateTime } from "@/lib/utils";
 const ImageThumbnail = ({ file }: { file: Models.Document }) => (
-  <div className="!mb-1 flex items-center gap-3 rounded-xl border border-light-200/40 bg-light-400/50 p-3">
+  <div className="mb-1 flex items-center gap-3 rounded-xl border border-light-200/40 bg-light-400/50 p-3 truncate ">
     <Thumbnail type={file.type} extension={file.extension} url={file.url} />
-    <div className="flex flex-col truncate...">
-      <p className="font-bold text-sm ">{file.name}</p>
+    <div className="flex flex-col w-full gap-2">
+      <p className="font-bold flex text-sm  line-clamp-1">{file.name}</p>
       <FormatedDateTime date={file.$createdAt} className="text-xs" />
     </div>
   </div>

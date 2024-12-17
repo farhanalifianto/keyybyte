@@ -76,10 +76,12 @@ const Sidebar = (props: propstypes) => {
           className="aspect-square w-10 rounded-full object-cover"
         ></Image>
         <div className="hidden lg:block text-white">
-          <p className="text-[14px] leading-[20px] font-semibold capitalize">
+          <p className="text-[14px] leading-[20px] font-semibold capitalize truncate">
             {fullName}
           </p>
-          <p className="text-[12px] leading-[16px] font-normal">{email}</p>
+          <p className="text-[12px] leading-[16px] font-normal truncate ...">
+            {email}
+          </p>
         </div>
       </div>
     </aside>

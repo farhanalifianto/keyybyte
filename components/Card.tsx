@@ -31,7 +31,7 @@ const Card = (props: CardProps) => {
       </div>
 
       <div className="flex flex-col gap-2 ">
-        <p className=" truncate ...">{file.name}</p>
+        <p className="truncate">{file.name}</p>
         <FormatedDateTime date={file.$createdAt} className="text-xs" />
       </div>
     </Link>
