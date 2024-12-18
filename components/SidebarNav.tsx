@@ -18,7 +18,7 @@ type propstypes = {
 const Sidebar = (props: propstypes) => {
   const { fullName, avatar, email } = props;
   return (
-    <aside className=" bg-black remove-scrollbar hidden h-screen w-[90px] flex-col overflow-auto px-5 py-7 sm:flex lg:w-[280px] xl:w-[300px]">
+    <aside className=" bg-black remove-scrollbar hidden h-screen w-[85px] flex-col overflow-auto px-5 py-7 sm:flex lg:w-[280px] xl:w-[300px]">
       <Link href="/">
         <div className="flex items-center justify-center   text-white ">
           <Image
@@ -75,7 +75,7 @@ const Sidebar = (props: propstypes) => {
           height={44}
           className="aspect-square w-10 rounded-full object-cover"
         ></Image>
-        <div className="hidden lg:block text-white">
+        <div className="hidden lg:block text-white w-full">
           <p className="text-[14px] leading-[20px] font-semibold capitalize truncate">
             {fullName}
           </p>

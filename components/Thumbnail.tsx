@@ -97,7 +97,12 @@ export const Thumbnail = ({
   const isImage = type === "image" && extension !== "svg";
 
   return (
-    <figure className={cn("thumbnail", className)}>
+    <figure
+      className={cn(
+        "flex-center size-[50px] min-w-[50px] overflow-hidden ",
+        className
+      )}
+    >
       {isImage ? (
         <Image
           src={isImage ? url : getFileIcon(extension, type)}
@@ -107,7 +112,7 @@ export const Thumbnail = ({
           className={cn(
             "size-8 object-contain",
             imageClassName,
-            isImage && "thumbnail-image"
+            isImage && "size-full object-cover object-center"
           )}
         />
       ) : (

@@ -4,12 +4,18 @@ import Sort from "@/components/SortFile";
 import { getFiles } from "@/lib/actions/file.action";
 import { Models } from "node-appwrite";
 import Card from "@/components/Card";
-const page = async ({ params }: SearchParamProps) => {
+import { getFileTypesParams } from "@/lib/utils";
+const page = async ({ searchParams, params }: SearchParamProps) => {
   const type = ((await params)?.type as string) || "";
-  const files = await getFiles();
-  console.log(files);
+  const searchText = ((await searchParams)?.query as string) || "";
+  const sort = ((await searchParams)?.sort as string) || "";
+
+  const types = getFileTypesParams(type) as FileType[];
+
+  const files = await getFiles({ types, searchText, sort });
+
   return (
-    <div className="mx-auto  max-w-7xl  md:grid-cols-2 xl:gap-10">
+    <div className="mx-auto  max-w-7xl  md:grid-cols-3 md:px-9 xl:gap-10">
       <section>
         <h1 className="h1 capitalize">{type}</h1>
         <div className="flex mt-2 flex-col justify-between sm:flex-row sm:items-center">

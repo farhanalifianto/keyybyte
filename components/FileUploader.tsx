@@ -82,7 +82,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
         <CiInboxOut size={35} />
       </button>
       {files.length > 0 && (
-        <ul className="fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-white p-7 shadow-drop-3 ">
+        <ul className="fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-xl bg-white p-7 shadow-drop-3 ">
           <h4 className="font-medium text-light-100">Uploading</h4>
           {files.map((file, index) => {
             const { type, extension } = getFileType(file.name);
@@ -90,13 +90,15 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
             return (
               <li
                 key={`${file.name}-${index}`}
-                className="flex items-center justify-between  gap-3 rounded-xl p-3 shadow-drop-3"
+                className="flex items-center justify-between  gap-3 rounded-xl p-3 shadow-drop-3 bg-black text-white"
               >
                 <div className="flex items-center gap-3">
                   <Thumbnail
                     type={type}
                     extension={extension}
                     url={convertFileToUrl(file)}
+                    className="!size-20"
+                    imageClassName="w-20 h-20"
                   />
                   <div className="subtitle-2 mb-2 line-clamp-1 max-w-[300px]">
                     {file.name}
