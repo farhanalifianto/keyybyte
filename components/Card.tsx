@@ -7,9 +7,11 @@ import FormatedDateTime from "./FormatedDateTime";
 import ActionDropDown from "./ActionDropDown";
 type CardProps = {
   file: Models.Document;
+  email: string;
 };
 const Card = (props: CardProps) => {
-  const { file } = props;
+  const { file, email } = props;
+  console.log(file);
   return (
     <Link
       href={file.url}
@@ -33,6 +35,11 @@ const Card = (props: CardProps) => {
       <div className="flex flex-col gap-2 ">
         <p className="truncate">{file.name}</p>
         <FormatedDateTime date={file.$createdAt} className="text-xs" />
+        {file.users.includes(email) ? (
+          <p className="text-xs font-light">Shared by {file.owner.email}</p>
+        ) : (
+          <></>
+        )}
       </div>
     </Link>
   );

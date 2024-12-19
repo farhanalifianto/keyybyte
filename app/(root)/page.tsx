@@ -11,11 +11,10 @@ export default function Home() {
           rel="stylesheet"
         ></link>
       </Head>
-      <Layout>
-        <div className="center">
-          <h1 className="h1">KeyyByte - Keyy's Private Cloud Services</h1>
-        </div>
-      </Layout>
+
+      <div className="center">
+        <h1 className="h1">KeyyByte - Keyy's Private Cloud Services</h1>
+      </div>
     </>
   );
 }

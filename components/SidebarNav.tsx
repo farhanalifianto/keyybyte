@@ -35,7 +35,7 @@ const Sidebar = (props: propstypes) => {
       </Link>
       <nav className="h5 mt-9 flex-1 gap-1 text-white text-xl">
         <ul className="flex flex-1 flex-col gap-6">
-          <Link href="/dashboard" className="lg:full">
+          <Link href="/" className="lg:full">
             <li className="flex text-light-100 gap-4 rounded-xl lg:w-full justify-center lg:justify-start items-center h5 lg:px-[30px] h-[52px] lg:rounded-full ">
               <MdDashboard className="w-6" />
               <p className="hidden lg:block">Dashboard</p>

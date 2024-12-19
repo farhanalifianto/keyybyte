@@ -5,10 +5,13 @@ import { getFiles } from "@/lib/actions/file.action";
 import { Models } from "node-appwrite";
 import Card from "@/components/Card";
 import { getFileTypesParams } from "@/lib/utils";
+import { getCurrentUser } from "@/lib/actions/user.action";
 const page = async ({ searchParams, params }: SearchParamProps) => {
   const type = ((await params)?.type as string) || "";
   const searchText = ((await searchParams)?.query as string) || "";
   const sort = ((await searchParams)?.sort as string) || "";
+
+  const currentUser = await getCurrentUser();
 
   const types = getFileTypesParams(type) as FileType[];
 
@@ -38,7 +41,7 @@ const page = async ({ searchParams, params }: SearchParamProps) => {
         {files.documents.length > 0 ? (
           <ul className="mt-5 flex flex-wrap gap-5">
             {files.documents.map((file: Models.Document) => (
-              <Card key={file.$id} file={file} />
+              <Card email={currentUser.email} key={file.$id} file={file} />
             ))}
           </ul>
         ) : (
