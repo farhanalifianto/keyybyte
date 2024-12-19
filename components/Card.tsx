@@ -11,7 +11,7 @@ type CardProps = {
 };
 const Card = (props: CardProps) => {
   const { file, email } = props;
-  console.log(file);
+
   return (
     <Link
       href={file.url}

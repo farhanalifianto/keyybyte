@@ -35,9 +35,6 @@ const page = async ({ searchParams, params }: SearchParamProps) => {
       </section>
       {/* render the files */}
       <section className="h-full rounded-[20px] bg-white p-5 xl:p-8">
-        <h2 className="text-xl font-bold text-light-100">
-          Recent files uploaded
-        </h2>
         {files.documents.length > 0 ? (
           <ul className="mt-5 flex flex-wrap gap-5">
             {files.documents.map((file: Models.Document) => (
