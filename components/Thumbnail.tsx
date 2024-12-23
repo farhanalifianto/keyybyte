@@ -86,7 +86,9 @@ export const getFileIcon = (
       }
   }
 };
-
+export interface Thumbnail {
+  src: string;
+}
 export const Thumbnail = ({
   type,
   extension,
@@ -105,7 +107,7 @@ export const Thumbnail = ({
     >
       {isImage ? (
         <Image
-          src={isImage ? url : getFileIcon(extension, type)}
+          src={isImage ? url : "getFileIcon(extension, type)"}
           alt="thumbnail"
           width={100}
           height={100}
