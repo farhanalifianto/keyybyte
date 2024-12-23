@@ -18,7 +18,7 @@ const page = async ({ searchParams, params }: SearchParamProps) => {
   const files = await getFiles({ types, searchText, sort });
 
   return (
-    <div className="mx-auto  max-w-7xl  md:grid-cols-3 md:px-9 xl:gap-10">
+    <div className="mx-auto  max-w-7xl  md:grid-cols-3  xl:gap-10">
       <section>
         <h1 className="h1 capitalize">{type}</h1>
         <div className="flex mt-2 flex-col justify-between sm:flex-row sm:items-center">
@@ -34,9 +34,9 @@ const page = async ({ searchParams, params }: SearchParamProps) => {
         </div>
       </section>
       {/* render the files */}
-      <section className="h-full rounded-[20px] bg-white p-5 xl:p-8">
+      <section className="h-full  rounded-xl bg-white p-2 xl:p-8">
         {files.documents.length > 0 ? (
-          <ul className="mt-5 flex flex-wrap gap-5">
+          <ul className="mt-5 flex flex-wrap gap-1 content-start">
             {files.documents.map((file: Models.Document) => (
               <Card email={currentUser.email} key={file.$id} file={file} />
             ))}

@@ -99,7 +99,7 @@ export const Thumbnail = ({
   return (
     <figure
       className={cn(
-        "flex-center size-[50px] min-w-[50px] overflow-hidden ",
+        "flex-center size-[50px] min-w-[50px] overflow-hidden rounded-xl ",
         className
       )}
     >

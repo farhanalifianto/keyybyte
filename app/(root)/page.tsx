@@ -22,7 +22,7 @@ const dashboard = async () => {
       <div className="mx-auto  max-w-7xl p-4  md:grid-cols-3 md:px-9 xl:gap-10">
         <section>
           <h1 className="h1 capitalize mb-5">Recently Uploaded</h1>
-          <div className="block w-full p-4 rounded-xl mt-2  bg-black text-white  sm:flex-row sm:items-center">
+          <div className="block items-center mx-auto justify-center w-[90%] p-4 rounded-xl mt-2  bg-black text-white  sm:flex-row sm:items-center">
             <div className="flex justify-center items-center gap-2">
               <h1 className="text-3xl font-light text-light">
                 Available Storage: {convertFileSize(totalSpace.used)} / 2 GB
