@@ -28,7 +28,7 @@ const dashboard = async () => {
                 Available Storage: {convertFileSize(totalSpace.used)} / 2 GB
               </h1>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mt-4">
               <Progress value={Number(calculatePercentage(totalSpace.used))} />
             </div>
           </div>
