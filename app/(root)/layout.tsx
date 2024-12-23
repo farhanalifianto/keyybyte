@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import { getCurrentUser } from "@/lib/actions/user.action";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
+
+export const dynamic = "force-dynamic";
 type propstypes = {
   children: React.ReactNode;
 };
