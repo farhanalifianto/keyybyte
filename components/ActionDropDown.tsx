@@ -111,9 +111,10 @@ const ActionDropDown = ({ file }: { file: Models.Document }) => {
               className="capitalize bg-black text-white p-2 rounded-md"
               onClick={handleActions}
             >
-              <p>{value}</p>
-              {isLoading && (
+              {isLoading ? (
                 <AiOutlineLoading3Quarters className="animate-spin" />
+              ) : (
+                <p>{value}</p>
               )}
             </button>
           </DialogFooter>
